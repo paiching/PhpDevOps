@@ -1,17 +1,27 @@
 <?php
 namespace App\Controllers;
+
+// use Psr\Http\Message\ResponseInterface as Response;
+// use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Controllers\BaseController;
 
+class FirstController extends BaseController {
 
 
-class FirstController{
-
-    public function home($request,$response,$args)
+    public function home($request, $response, $args)
     {
-        $view =  new \Slim\Views\PhpRenderer('../app/Views/');
-        $response = $view->render($response,'view.phtml', ['name'=>$args['name']]);
-        //return 'hee!'. $args['name'];
+        // $data = $request->getQueryParams(); // GET data like ?param=something
+        // $data = $request->getParsedBody(); // POST data
+        $response->getBody()->write($this->container->my_service);
+        $response->getBody()->write($this->container['settings']['db']['user']);
+
+        $data = [
+            ['name'=>'Adam','id'=>1],
+            ['name'=>'Ben','id'=>2]
+        ];
+
+        $response = $this->container->view->render($response, 'view.phtml', ['data' => $data, 'name'=>$args['name']]);
+
         return $response;
     }
 }
-

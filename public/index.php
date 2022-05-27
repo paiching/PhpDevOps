@@ -1,17 +1,12 @@
 <?php
- //use Psr\Http\Message\ServerRequestInterface as Request;
- //use Psr\Http\Message\ResponseInterface as Response;
 
- 
 require '../vendor/autoload.php';
 
+$config = require '../app/config.php';
+$app = new \Slim\App(['settings' => $config]);
 
-$config = ['settings' => [
-    'addContentLengthHeader' => false,
-]];
-
-$app = new \Slim\App($config);
-
+require '../app/dependencies.php';
 require '../app/routes.php';
 
 $app->run();
+
